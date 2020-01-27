@@ -35,7 +35,10 @@ public class ImageControllerTest {
         MockitoAnnotations.initMocks(this);
 
         controller = new ImageController(imageService, recipeService);
-        mockMvc = MockMvcBuilders.standaloneSetup(controller).build();
+        mockMvc = MockMvcBuilders
+                .standaloneSetup(controller)
+                //pass in the controller class that is annotated with @ControllerAdvice
+                .setControllerAdvice(new ExceptionHandlerController()).build();
     }
 
     @Test
@@ -53,6 +56,14 @@ public class ImageControllerTest {
 
         verify(recipeService, times(1)).findCommandById(anyLong());
 
+    }
+
+    @Test
+    public void getImageFormNumberFormatException() throws Exception {
+        //when
+        mockMvc.perform(get("/recipe/kefjhsfkfh/image"))
+                .andExpect(status().isBadRequest())
+                .andExpect(view().name("400error"));
     }
 
     @Test

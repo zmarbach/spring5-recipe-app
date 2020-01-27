@@ -51,7 +51,6 @@ public class UnitOfMeasureServiceImplTest {
 
         //assert
         assertEquals(2, uomCommands.size());
-        assertEquals(Long.valueOf(1L), uomCommands.iterator().next().getId());
 
     }
 }

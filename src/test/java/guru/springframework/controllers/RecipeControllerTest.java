@@ -36,7 +36,11 @@ public class RecipeControllerTest {
         MockitoAnnotations.initMocks(this);
 
         controller = new RecipeController(recipeService);
-        mockMvc = MockMvcBuilders.standaloneSetup(controller).build();
+        mockMvc = MockMvcBuilders
+                .standaloneSetup(controller)
+                //have to set the controller advice, so tests will work like normal app does (pass in the controller class that is annotated with @ControllerAdvice)
+                //can NOT mock this above cuz want it to function as normal, not a mock version that we have to "tell what to do" like we do with recipeService
+                .setControllerAdvice(new ExceptionHandlerController()).build();
     }
 
     @Test
