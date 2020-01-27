@@ -50,7 +50,7 @@ public class RecipeController {
     @PostMapping("recipe")
     //giving @ModelAttribute the name of "recipe" adds the command parameter as an attribute on the model with the name "recipe"
     //Binding result is result of validation checks
-    public String saveOrUpdate(@Valid @ModelAttribute("recipe") RecipeCommand command, BindingResult bindingResult){
+    public String saveOrUpdate(@Valid @ModelAttribute("recipe") RecipeCommand command, BindingResult bindingResult, Model model){
 
         //if validation fails, we will display errors to user
         if(bindingResult.hasErrors()){
