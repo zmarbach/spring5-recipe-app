@@ -47,7 +47,7 @@ public class RecipeServiceImpl implements RecipeService {
 
         if (!recipeOptional.isPresent()) {
             //throw custom exception here (it will return NOT_FOUND http status code cuz we annotated exception class with @ResponseStatus)
-            throw new NotFoundException("Recipe Not Found!");
+            throw new NotFoundException("Recipe not found for id value: " + l.toString());
         }
 
         return recipeOptional.get();

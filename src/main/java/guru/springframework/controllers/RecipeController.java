@@ -1,11 +1,14 @@
 package guru.springframework.controllers;
 
 import guru.springframework.commands.RecipeCommand;
+import guru.springframework.exceptions.NotFoundException;
 import guru.springframework.services.RecipeService;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.ModelAndView;
 
 /**
  * Created by jt on 6/19/17.
@@ -54,5 +57,23 @@ public class RecipeController {
 
         recipeService.deleteById(Long.valueOf(id));
         return "redirect:/";
+    }
+
+
+    //have to use @ResponseStatus above the method too if want to return specific Http Status code...@ExceptionHandler overrides the @ResponseStatus on exception class
+    @ResponseStatus(HttpStatus.NOT_FOUND)
+    //telling spring that anytime NotFoundException is thrown...map to this method and run the logic. So will always go to 404error page
+    @ExceptionHandler(NotFoundException.class)
+    public ModelAndView handleNotFound(Exception e){
+        log.error("Handling not found error");
+        log.error(e.getMessage());
+
+        ModelAndView modelAndView = new ModelAndView();
+
+        modelAndView.setViewName("404error");
+        //can add error to the ModelAndView cuz we passed the Exception in above as parameter
+        modelAndView.addObject("exception", e);
+
+        return modelAndView;
     }
 }
