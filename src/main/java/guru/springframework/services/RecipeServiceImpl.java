@@ -44,13 +44,11 @@ public class RecipeServiceImpl implements RecipeService {
     public Recipe findById(Long l) {
 
         Optional<Recipe> recipeOptional = recipeRepository.findById(l);
-
-        if (!recipeOptional.isPresent()) {
-            //throw custom exception here (it will return NOT_FOUND http status code cuz we annotated exception class with @ResponseStatus)
-            throw new NotFoundException("Recipe not found for id value: " + l.toString());
-        }
-
-        return recipeOptional.get();
+            if (!recipeOptional.isPresent()) {
+                //throw custom exception here (it will return NOT_FOUND http status code cuz we annotated exception class with @ResponseStatus)
+                throw new NotFoundException("Recipe not found for id value: " + l.toString());
+            }
+            return recipeOptional.get();
     }
 
     @Override

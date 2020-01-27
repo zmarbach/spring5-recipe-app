@@ -124,4 +124,18 @@ public class RecipeServiceImplTest {
         //then
         //should throw Error
     }
+
+    @Test(expected = NumberFormatException.class)
+    public void getRecipeByIdNumberFormatException(){
+        //given
+        Optional<Recipe> recipeOptional = Optional.empty();
+
+        //when
+        when(recipeRepository.findById(anyLong())).thenReturn(recipeOptional);
+        recipeService.findById(1L);
+
+
+        //then
+        //should throw Error
+    }
 }
